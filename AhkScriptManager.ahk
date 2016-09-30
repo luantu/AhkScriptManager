@@ -37,7 +37,7 @@ DetectHiddenWindows On  ; 允许探测脚本中隐藏的主窗口. 很多子程�
 SetTitleMatchMode 2     ; 避免需要指定如下所示的文件的完整路径
 
 EnvGet, Paths, PATH
-EnvSet, PATH, %A_ScriptDir%\3rd`;%Paths%	; 设置环境变量. 通过AhkScriptManager启动的程序均持有该环境变量
+EnvSet, PATH, %A_ScriptDir%\3rd`;%Paths%    ; 设置环境变量. 通过AhkScriptManager启动的程序均持有该环境变量
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                     初始化                            ;
@@ -55,7 +55,7 @@ UnOpenList := Array()
 ; 遍历scripts目录下的ahk文件
 Loop, %A_ScriptDir%\scripts\*.ahk
 {
-	StringTrimRight, menuName, A_LoopFileName, StrLen(".ahk")
+    StringTrimRight, menuName, A_LoopFileName, StrLen(".ahk")
     scriptCount += 1
 
     ; 已经打开则关闭，否则无法被AHK Manager接管
@@ -88,7 +88,7 @@ Menu, Tray, Add, 启动脚本(&S)`tCtrl + Alt + 左键, :scripts_unopen         
 Menu, Tray, Add
 Menu, Tray, Add, 重载脚本(&R)`tCtrl + Alt + 中键, :scripts_restart          ; R: Restart
 Menu, Tray, Add, 关闭脚本(&C)`tCtrl + Alt + 右键, :scripts_unclose          ; C: Close
-Menu, Tray, Add, 关闭所有脚本(&A)`tCtrl + Alt + A, tsk_closeAll             ; A: All
+;Menu, Tray, Add, 关闭所有脚本(&A)`tCtrl + Alt + A, tsk_closeAll             ; A: All
 Menu, Tray, Add
 Menu, Tray, Add, 进程管理(&P), tsk_showproc                                 ; P: Process
 Menu, Tray, Add
@@ -124,8 +124,8 @@ Return
 Return
 
 ; Ctrl + Alt + A, 关闭所有
-^!A::
-    Goto tsk_closeAll
+;^!A::
+;    Goto tsk_closeAll
 Return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -314,7 +314,7 @@ RecreateMenus:
     UnOpenList := Array()   ; 未打开脚本列表
     Loop, %scriptCount%
     {
-		StringTrimRight, menuName, scriptsName%A_Index%, StrLen(".ahk")
+        StringTrimRight, menuName, scriptsName%A_Index%, StrLen(".ahk")
         if scriptsOpened%A_Index% = 1
             OpenList.Insert(menuName)
         if scriptsOpened%A_Index% = 0

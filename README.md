@@ -53,6 +53,11 @@ AhkScriptManager 仅接管 `scripts` 目录中的脚本，对已运行的其他�
 | readme.md | 本文件 |
 | TabStop Settings.txt | 各种常见文本编辑器按此设置，以便代码缩进风格统一 |
 | MyAutoHotkey | 本人使用的快捷键及相关设置
+
+## MyAutoHotkey说明
+配置IDM使用，自动修订下载路径归类
+在资源管理器、tc下快捷键svn更新、提交
+
 ## 软件配置
 | 软件 | 版本 |
 | ---- | ---- |

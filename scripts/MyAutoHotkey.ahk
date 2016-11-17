@@ -71,6 +71,9 @@ isCurrentEnglish = 0
 
 TrayTip,MyAutoHotkey, autohotkey actived.,2,1
 
+; 不显示图标~
+Menu, Tray, NoIcon
+
 ;在鼠标处，显示小提示
 showTips(var_string)
 {
@@ -219,7 +222,7 @@ Return
 ; 开启浏览器，如果已经开启，激活窗口
 #b::
 IfWinNotExist  ahk_class Chrome_WidgetWin_1
-    Run "D:\Chrome\MyChrome.exe", , Max
+    Run "D:\CentBrowser\chrome.exe", , Max
 Else 
 IfWinNotActive ahk_class Chrome_WidgetWin_1
     WinActivate 

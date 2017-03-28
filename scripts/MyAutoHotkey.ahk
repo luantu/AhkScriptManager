@@ -1,15 +1,3 @@
-;需要注册为默认英文输入法的分组
-GroupAdd,en,ahk_exe Xshell.exe
-GroupAdd,en,ahk_exe cmd.exe
-GroupAdd,en,ahk_exe sh.exe
-
-;需要注册为默认中文输入法的分组
-;GroupAdd,cn,ahk_exe Notepad++.exe
-GroupAdd,cn,ahk_exe RTX.exe
-GroupAdd,cn,ahk_exe Wechat.exe
-GroupAdd,cn,ahk_exe chrome.exe
-GroupAdd,cn,ahk_exe QQ.exe
-GroupAdd,cn,ahk_exe Wiz.exe
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; 任务栏是否显示缩略图，
@@ -31,23 +19,23 @@ Menu, Tray, NoIcon
 showTips(var_string)
 {
     ;方式一，通知栏弹窗
-    TrayTip,AHK, %var_string%
+    ;TrayTip,AHK, %var_string%
     
     ;方式二, 跟随鼠标提示
-;   ToolTip, Tips, 10, 10
-;   #Persistent
-;   ToolTip, %var_string%
-;   SetTimer, RemoveTip, 1000
-;   return
-; RemoveTip:
-;   SetTimer, RemoveTip, Off
-;   ToolTip
-;   return
+    ToolTip, Tips, 10, 10
+    #Persistent
+    ToolTip, %var_string%
+    SetTimer, RemoveTip, 1000
+    return
+  RemoveTip:
+    SetTimer, RemoveTip, Off
+    ToolTip
+    return
     
     ;方式三，屏幕中间显示
-    ;SplashTextOn, , , %var_string%
-    ;Sleep, 1000
-    ;SplashTextOff
+;    SplashTextOn, , , %var_string%
+;    Sleep, 1000
+;    SplashTextOff
 }
 
 ; 已有快捷方式说明
@@ -84,9 +72,12 @@ ShellMessage(wParam,lParam) {
             ControlGetText, docUrl, Edit3, 
             SplitPath, docUrl ,fileName
             
+            showTips("准备下载：" + fileName)
+            
             ; 周报
             IfInString, fileName, 周报
             {
+                showTips("周报："+fileName)
                 ControlClick , Edit3, , , , , x102 y93, , 
                 Clipboard = 
                 Clipboard = F:\Documents\工作文档\周报\%fileName%
@@ -96,8 +87,9 @@ ShellMessage(wParam,lParam) {
             }
             
             ; 月报
-            IfInString, fileName, 月报
+            IfInString, fileName, 月总结
             {
+                showTips("月总结："+fileName)
                 ControlClick , Edit3, , , , , x102 y93, , 
                 Clipboard = 
                 Clipboard = F:\Documents\工作文档\月报\%fileName%
@@ -109,6 +101,7 @@ ShellMessage(wParam,lParam) {
             ; chromeInstall
             IfInString, fileName, chrome_installer
             {
+                showTips("chromeInstall："+fileName)
                 ControlClick , Edit3, , , , , x102 y93, , 
                 Clipboard = 
                 Clipboard = D:\Chrome\%fileName%
@@ -120,9 +113,22 @@ ShellMessage(wParam,lParam) {
             ; Snipaste
             IfInString, fileName, Snipaste
             {
+                showTips("Snipaste："+fileName)
                 ControlClick , Edit3, , , , , x102 y93, , 
                 Clipboard = 
                 Clipboard = D:\Program Files\Snipaste\%fileName%
+                ClipWait 
+                Send ^v
+                return
+            }
+            
+            ; 2.2.0
+            IfInString, fileName, ONC_2.2.0
+            {
+                showTips("RG-ONC_2.2.0："+fileName)
+                ControlClick , Edit3, , , , , x102 y93, , 
+                Clipboard = 
+                Clipboard = F:\Working\SDN&NFV\RGONC-MANAGE\RGONC_2.2.0\%fileName%
                 ClipWait 
                 Send ^v
                 return
@@ -195,12 +201,12 @@ Else
     WinMinimize 
 Return 
 
-; 开启source insight，如果已经开启，激活窗口
+; 开启sublime，如果已经开启，激活窗口
 #s::
-IfWinNotExist ahk_class si_Frame 
-    Run "D:\Program Files (x86)\Source Insight 3\Insight3.Exe"
+IfWinNotExist ahk_exe sublime_text.exe 
+    Run "D:\Program Files\Sublime Text 3\sublime_text.exe"
 Else 
-IfWinNotActive ahk_class si_Frame 
+IfWinNotActive ahk_exe sublime_text.exe
     WinActivate 
 Else 
     WinMinimize 

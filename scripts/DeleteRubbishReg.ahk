@@ -4,7 +4,8 @@ Loop, %0%  ; For each parameter:
     params .= A_Space . param
   }
 ShellExecute := A_IsUnicode ? "shell32\ShellExecute":"shell32\ShellExecuteA"
- 
+
+;; 以管理员权限运行
 if not A_IsAdmin
 {
     If A_IsCompiled
@@ -46,6 +47,9 @@ RegDelete, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows\CurrentVersion\Explore
 ; 视频
 RegDelete, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;删除桌面右键显示器快捷方式
+RegDelete, HKEY_CLASSES_ROOT, Directory\Background\shellex\ContextMenuHandlers\igfxcui
 
 ;保持myChrome为默认html打开方式
 RegWrite, REG_SZ, HKEY_CLASSES_ROOT, ChromeHTML.77YFJP5HJD5VZSM3X3AK2FMTCQ\shell\open\command, ,`"D:\CentBrowser\chrome.exe`" -- `"`%1`"

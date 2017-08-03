@@ -74,6 +74,17 @@ ShellMessage(wParam,lParam) {
             
             showTips("准备下载：" + fileName)
             
+            ; RG-ONC_2.2.1-项目周报
+            IfInString, fileName, RG-ONC_2.2.1-项目周报
+            {
+                showTips("RG-ONC_2.2.1-项目周报："+fileName)
+                ControlClick , Edit3, , , , , x102 y93, , 
+                Clipboard = 
+                Clipboard = F:\Working\SDN&NFV\RGONC-MANAGE\RGONC_2.2.1\项目周报\%fileName%
+                ClipWait 
+                Send ^v
+                return
+            }
             ; 周报
             IfInString, fileName, 周报
             {
@@ -213,17 +224,17 @@ Else
 Return 
 
 ; 开启outlook，如果已经开启，激活窗口
-#o::
-IfWinNotExist ahk_exe OUTLOOK.EXE
-    Run "D:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE", , Max
-Else 
-IfWinNotActive ahk_exe OUTLOOK.EXE
-    WinActivate 
-Else 
-    WinMinimize 
-Return
+;#o::
+;IfWinNotExist ahk_exe OUTLOOK.EXE
+;    Run "D:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE", , Max
+;Else 
+;IfWinNotActive ahk_exe OUTLOOK.EXE
+;    WinActivate 
+;Else 
+;    WinMinimize 
+;Return
 
-#n::Run Notepad++
+#n::Run "D:\Program Files (x86)\Notepad++\notepad++.exe"
 return 
 
 :://g:: 
@@ -270,6 +281,8 @@ Return
 ; 关闭shit+空格 导致半角切换
 +Space::
 return
+
+; 关闭中文半角
 
 #+m::
 IfWinNotExist  ahk_class WinMergeWindowClassW

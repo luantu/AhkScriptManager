@@ -5,15 +5,14 @@
 ; 新: DWORD: 1 (0x1)
 ; 旧: DWORD: 240 (0xf0)
 
+TrayTip,MyAutoHotkey, autohotkey actived.,2,1
+; 不显示图标~
+Menu, Tray, NoIcon
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;全局定义当前的输入法，尽量减少多余的send对操作的影响
 isCurrentEnglish = 0
-
-TrayTip,MyAutoHotkey, autohotkey actived.,2,1
-
-; 不显示图标~
-Menu, Tray, NoIcon
 
 ;在鼠标处，显示小提示
 showTips(var_string)
@@ -213,15 +212,15 @@ Else
 Return 
 
 ; 开启sublime，如果已经开启，激活窗口
-#s::
-IfWinNotExist ahk_exe sublime_text.exe 
-    Run "D:\Program Files\Sublime Text 3\sublime_text.exe"
-Else 
-IfWinNotActive ahk_exe sublime_text.exe
-    WinActivate 
-Else 
-    WinMinimize 
-Return 
+;#s::
+;IfWinNotExist ahk_exe sublime_text.exe 
+;    Run "D:\Program Files\Sublime Text 3\sublime_text.exe"
+;Else 
+;IfWinNotActive ahk_exe sublime_text.exe
+;    WinActivate 
+;Else 
+;    WinMinimize 
+;Return 
 
 ; 开启outlook，如果已经开启，激活窗口
 ;#o::
@@ -278,11 +277,29 @@ IfWinActive ahk_class CabinetWClass
 }
 Return
 
+; 关闭中文半角
 ; 关闭shit+空格 导致半角切换
 +Space::
 return
 
-; 关闭中文半角
++Del::
+IfWinActive ahk_class TFoxMainFrm.UnicodeClass
+{
+    ; SHIFT+DELETE显示弹框确认
+    MsgBox, 4, 不准乱删邮件, (#^.^#)请认真确认是否彻底删除选中邮件, 10  ; 5 秒的超时时间.
+    IfMsgBox, No
+        Return  ; 用户点击了 "No" 按钮.
+    IfMsgBox, Timeout
+        Return ; 即在超时时假设点击了 "No".
+    ; 否则, 继续:
+    Send +{Del}
+    Return
+}
+Else
+{
+Send +{Del}
+}
+Return
 
 #+m::
 IfWinNotExist  ahk_class WinMergeWindowClassW

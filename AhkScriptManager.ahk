@@ -219,7 +219,7 @@ tsk_showproc:
     WmiInfo := GetWMI("AutoHotkey.exe")
     ShowIndex := 0
     Gui, Font, s9, Arial
-    Gui, Add, ListView, x2 y0 w250 h200, Index|PID|Script Name|Memory
+    Gui, Add, ListView, x2 y0 w350 h300, Index|PID|Script Name|Memory
     Loop, %scriptCount%
     {
         thisScript := scriptsName%A_Index%

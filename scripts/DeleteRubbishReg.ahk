@@ -79,8 +79,11 @@ RegWrite, REG_SZ, HKEY_CURRENT_USER, SOFTWARE\Microsoft\Windows\CurrentVersion\R
 RegDelete, HKEY_CLASSES_ROOT, *\shellex\ContextMenuHandlers\knewdocshellext
 RegDelete, HKEY_CLASSES_ROOT, *\shellex\ContextMenuHandlers\kwpsshellext
 RegDelete, HKEY_CLASSES_ROOT, *\shellex\ContextMenuHandlers\qingshellext
+RegDelete, HKEY_CLASSES_ROOT, *\shellex\ContextMenuHandlers\QingNseContextMenu
+RegDelete, HKEY_CLASSES_ROOT, *\shellex\ContextMenuHandlers\        KingsoftOfficePDF.ContextMenu
 RegDelete, HKEY_CLASSES_ROOT, Directory\shellex\ContextMenuHandlers\QingNseContextMenu
 RegDelete, HKEY_CLASSES_ROOT, Directory\shellex\ContextMenuHandlers\qingshellext
+
 RegDelete, HKEY_LOCAL_MACHINE, SOFTWARE\Classes\Folder\shellex\ContextMenuHandlers\Foxit_ConvertToPDF_Reader
 
 

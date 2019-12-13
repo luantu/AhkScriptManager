@@ -1,42 +1,11 @@
+#Include ../lib/MyToolTips.ahk
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; 任务栏是否显示缩略图，
-; HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband\MaxThumbSizePx
-; 新: DWORD: 1 (0x1)
-; 旧: DWORD: 240 (0xf0)
-
-TrayTip,MyAutoHotkey, autohotkey actived.,2,1
 ; 不显示图标~
 Menu, Tray, NoIcon
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ScreenShowTips("My Hotkey Mapping actived")
 
-;全局定义当前的输入法，尽量减少多余的send对操作的影响
-isCurrentEnglish = 0
-
-;在鼠标处，显示小提示
-showTips(var_string)
-{
-    ;方式一，通知栏弹窗
-    ;TrayTip,AHK, %var_string%
-    
-    ;方式二, 跟随鼠标提示
-    ToolTip, Tips, 10, 10
-    #Persistent
-    ToolTip, %var_string%
-    SetTimer, RemoveTip, 1000
-    return
-  RemoveTip:
-    SetTimer, RemoveTip, Off
-    ToolTip
-    return
-    
-    ;方式三，屏幕中间显示
-;    SplashTextOn, , , %var_string%
-;    Sleep, 1000
-;    SplashTextOff
-}
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;代码开始;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; 已有快捷方式说明
 ; win+h  清空垃圾桶
 ; win+x  以管理员方式运行命令行
@@ -46,112 +15,12 @@ showTips(var_string)
 ; win+w  打开为知笔记
 ; win+b  打开浏览器
 ; win+c  在tc界面为提交svn代码
-;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; 
 
-#Persistent
-SetBatchLines, -1
-Process, Priority,, High
-
-Gui +LastFound
-hWnd := WinExist()
-
-DllCall("RegisterShellHookWindow", UInt, hWnd)
-MsgNum := DllCall("RegisterWindowMessage", Str, "SHELLHOOK")
-OnMessage(MsgNum, "ShellMessage")
-Return
-
-ShellMessage(wParam,lParam) {
-    If (wParam = 1) ; HSHELL_WINDOWCREATED := 1
-    {
-        WinGetActiveTitle, Title
-
-        IfWinActive, 下载文件信息
-        {
-            ControlGetText, docUrl, Edit3, 
-            SplitPath, docUrl ,fileName
-            
-            showTips("准备下载：" + fileName)
-            
-            ; RG-ONC_2.2.1-项目周报
-            IfInString, fileName, RG-ONC_2.2.1-项目周报
-            {
-                showTips("RG-ONC_2.2.1-项目周报："+fileName)
-                ControlClick , Edit3, , , , , x102 y93, , 
-                Clipboard = 
-                Clipboard = F:\Working\SDN&NFV\RGONC-MANAGE\RGONC_2.2.1\项目周报\%fileName%
-                ClipWait 
-                Send ^v
-                return
-            }
-            ; 周报
-            IfInString, fileName, 周报
-            {
-                showTips("周报："+fileName)
-                ControlClick , Edit3, , , , , x102 y93, , 
-                Clipboard = 
-                Clipboard = F:\Documents\工作文档\周报\%fileName%
-                ClipWait 
-                Send ^v
-                return
-            }
-            
-            ; 月报
-            IfInString, fileName, 月总结
-            {
-                showTips("月总结："+fileName)
-                ControlClick , Edit3, , , , , x102 y93, , 
-                Clipboard = 
-                Clipboard = F:\Documents\工作文档\月报\%fileName%
-                ClipWait 
-                Send ^v
-                return
-            }
-            
-            ; chromeInstall
-            IfInString, fileName, chrome_installer
-            {
-                showTips("chromeInstall："+fileName)
-                ControlClick , Edit3, , , , , x102 y93, , 
-                Clipboard = 
-                Clipboard = D:\Chrome\%fileName%
-                ClipWait 
-                Send ^v
-                return
-            }
-            
-            ; Snipaste
-            IfInString, fileName, Snipaste
-            {
-                showTips("Snipaste："+fileName)
-                ControlClick , Edit3, , , , , x102 y93, , 
-                Clipboard = 
-                Clipboard = D:\Program Files\Snipaste\%fileName%
-                ClipWait 
-                Send ^v
-                return
-            }
-            
-            ; 2.2.0
-            IfInString, fileName, ONC_2.2.0
-            {
-                showTips("RG-ONC_2.2.0："+fileName)
-                ControlClick , Edit3, , , , , x102 y93, , 
-                Clipboard = 
-                Clipboard = F:\Working\SDN&NFV\RGONC-MANAGE\RGONC_2.2.0\%fileName%
-                ClipWait 
-                Send ^v
-                return
-            }
-            
-            return
-        }
-    }
-}
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;代码开始;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;win+h 清空垃圾桶
 #h::FileRecycleEmpty
 
+; win+x  以管理员方式运行命令行
 #x::
 send,#xa
 return
@@ -315,4 +184,4 @@ Return
 #f::
 IfWinNotActive ahk_class EVERYTHING
     Send ^+{F12}
-Return 
+Return
